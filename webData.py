@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
+import requests
 import pandas as pd
 
 # NASA Exoplanet URL
@@ -25,4 +26,11 @@ def scrape():
     for col_data in table_cols:
 
         print(col_data.text)
-        
+
+page = requests.get(hyperlink)
+soup = BeautifulSoup(page.content,"html.parser")
+
+#Empty list
+list = []
+for tr_tag in soup.find_all("tr", attrs = {"class" :,"fact_row"}):
+    td_tags = tr_tags.find_all("td")
